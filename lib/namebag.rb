@@ -12,6 +12,7 @@ end
 require 'namebag/parser'
 require 'namebag/zone'
 require 'namebag/record'
+require 'namebag/zonefile_builder'
 
 %w[a txt cname mx].each do |record_type|
   require 'namebag/record/' + record_type

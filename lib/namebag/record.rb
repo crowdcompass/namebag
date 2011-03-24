@@ -1,20 +1,20 @@
 class Namebag::Record
 
   attr_reader :name
-  attr_reader :value
+  attr_reader :data
 
-  def initialize(zone, name, value = nil)
+  def initialize(zone, name, data = nil)
     @zone = zone
     @name = name
-    @value = value
+    @data = data
   end
 
   def ==(other)
-    [type, name, value] == [other.type, other.name, other.value]
+    [type, name, data] == [other.type, other.name, other.data]
   end
 
   def inspect
-    "#<#{self.class.name} #{name} #{value}>"
+    "#<#{self.class.name} #{name} #{data}>"
   end
 
   def conflicts_with?(other)
@@ -23,6 +23,18 @@ class Namebag::Record
 
   def type
     self.class.name.split("::").last
+  end
+
+  def fqdn
+    if name
+      if name =~ /\.$/
+        name
+      else
+        "#{name}.#{@zone.fqdn}"
+      end
+    else
+      @zone.fqdn
+    end
   end
 
 end

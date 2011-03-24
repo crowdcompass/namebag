@@ -39,6 +39,8 @@ class Namebag::Parser
     end
   end
 
+  attr_reader :zones
+
   def initialize
     @zones = []
   end

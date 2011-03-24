@@ -3,6 +3,7 @@ require 'namebag'
 class Namebag::Zone
 
   attr_reader :name
+  attr_reader :records
 
   def initialize(name)
     @name = name
@@ -15,6 +16,18 @@ class Namebag::Zone
     else
       add_real_record(create_record(*args))
     end
+  end
+
+  def fqdn
+    if name =~ /\.$/
+      name
+    else
+      name + "."
+    end
+  end
+
+  def to_zonefile
+    Namebag::ZonefileBuilder.new(self).to_zonefile
   end
 
   private
