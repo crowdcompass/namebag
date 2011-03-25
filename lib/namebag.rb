@@ -7,13 +7,12 @@ module Namebag
       super("New record #{new_record} conflicts with existing record #{existing_record}")
     end
   end
-end
 
-require 'namebag/parser'
-require 'namebag/zone'
-require 'namebag/record'
-require 'namebag/zonefile_builder'
+  autoload :Parser, 'namebag/parser'
+  autoload :Zone, 'namebag/zone'
+  autoload :Record, 'namebag/record'
+  autoload :ZonefileBuilder, 'namebag/zonefile_builder'
+  autoload :Route53Syncer, 'namebag/route53_syncer'
+  autoload :NamebagCommand, 'namebag/namebag_command'
 
-%w[a txt cname mx].each do |record_type|
-  require 'namebag/record/' + record_type
 end
