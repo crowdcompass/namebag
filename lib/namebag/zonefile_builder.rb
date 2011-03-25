@@ -2,7 +2,7 @@ class Namebag::ZonefileBuilder
 
   def initialize(zone, opts = {})
     @zone = zone
-    @opts = {}
+    @opts = opts 
   end
 
   def to_zonefile

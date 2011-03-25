@@ -24,9 +24,9 @@ zone "crowdcompass.com" do
   cname "docs", "ghs.google.com."
   cname "sites", "ghs.google.com."
 
-  txt "google-site-verification=-GlKltHYqepTFWAsE5oiD5TZoaPgedLDvjT8dtAe6-o"
+  txt "\"google-site-verification=-GlKltHYqepTFWAsE5oiD5TZoaPgedLDvjT8dtAe6-o\""
 
-  mx "0 aspmx.l.google.com"
+  mx "0 aspmx.l.google.com."
 end
 
 __END__
