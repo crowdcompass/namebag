@@ -21,6 +21,10 @@ class Namebag::Parser
     end
 
     def method_missing(m, *args)
+      record m, *args
+    end
+
+    def record(m, *args)
       @zone.add_record m, *args
     end
 
