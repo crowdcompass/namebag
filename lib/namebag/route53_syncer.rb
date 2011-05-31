@@ -42,7 +42,7 @@ class Namebag::Route53Syncer
         zone.name == @zone.fqdn
       }
       @r53_zone ||= begin
-        z = Naws::Route53::Models::HostedZone.new_with_context(@context, :name => @zone.fqdn)
+        z = Naws::Route53::Models::HostedZone.new_with_context(@context, :name => @zone.fqdn, :caller_reference => Time.now.to_s)
         unless z.save
           @logger.error "Unable to save HostedZone #{@zone.name}!"
           raise
