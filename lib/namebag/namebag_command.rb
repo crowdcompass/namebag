@@ -15,6 +15,16 @@ class Namebag::NamebagCommand < Thor
     end
   end
 
+  desc "route53_export ZONES...", "Upload "
+  method_option :authentication, type: :string, aliases: %w[--auth -a], desc: "Path to a YAML file including Route53 authentication information. Defaults to checking ~/.namebag.auth.yml. Create the file with route53_auth."
+  def route53_export(*zones)
+    zones.map do |zone_name|
+      zone = Namebag::Zone.new zone_name
+      r53 = Namebag::Route53Syncer.new(zone, auth_info)
+      puts Namebag::ZonefileBuilder.new(r53.sync_down).to_zonefile
+    end
+  end
+
   desc "route53_auth [AUTHFILE]", "Creates a Route53 authentication file in AUTHFILE (default is ~/.namebag.auth.yml)"
   def route53_auth(auth_file = default_auth_path)
     if File.exist?(auth_file)

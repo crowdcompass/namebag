@@ -35,6 +35,18 @@ class Namebag::Route53Syncer
     end
   end
 
+  def sync_down
+    find_or_create_r53_zone
+    @logger.info "Nameservers for #{@zone.name}: #{@r53_zone.name_servers.join(" ")}"
+    find_existing_records
+    @r53_zone.record_sets.each do |record_set|
+      record_set.records.each do |record_value|
+        @zone.add_record record_set.type, record_set.name, record_value
+      end
+    end
+    @zone
+  end
+
   private
 
     def find_or_create_r53_zone
