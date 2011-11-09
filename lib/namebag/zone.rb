@@ -39,6 +39,12 @@ class Namebag::Zone
 
     def resolve_record_type(type)
       Namebag::Record.const_get(type.upcase)
+    rescue NameError
+      if type == "generic"
+        raise
+      else
+        resolve_record_type("generic")
+      end
     end
 
     def add_real_record(record)

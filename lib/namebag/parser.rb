@@ -37,7 +37,7 @@ class Namebag::Parser
       names.each do |name|
         a name, ip_addr
         if opts[:wildcards]
-          cname "*.#{name}", name
+          cname "*.#{name}", "#{name}.#{@zone.name}."
         end
       end
     end

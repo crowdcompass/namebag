@@ -15,7 +15,7 @@ class Namebag::NamebagCommand < Thor
     end
   end
 
-  desc "route53_export ZONES...", "Upload "
+  desc "route53_export ZONES...", "Export an existing Route53 zone as a BIND-style zonefile"
   method_option :authentication, type: :string, aliases: %w[--auth -a], desc: "Path to a YAML file including Route53 authentication information. Defaults to checking ~/.namebag.auth.yml. Create the file with route53_auth."
   def route53_export(*zones)
     zones.map do |zone_name|
@@ -44,6 +44,15 @@ class Namebag::NamebagCommand < Thor
         f.write info.to_yaml
       }
       say "Authentication information written out to #{auth_file}.", :green
+    end
+  end
+
+  desc "bind_export NAMEBAG", "Export zones described in NAMEBAG as a BIND-style zonefile"
+  def bind_export(namebag_file)
+    ps = Namebag::Parser.new
+    ps.read_file namebag_file
+    ps.zones.each do |zone|
+      puts Namebag::ZonefileBuilder.new(zone).to_zonefile
     end
   end
 
